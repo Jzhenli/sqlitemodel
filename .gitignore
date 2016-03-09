@@ -1,0 +1,8 @@
+build/
+dist/
+sqlitemodel.egg-info
+README.md
+setup.py
+*.pyc
+test.py
+test/

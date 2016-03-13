@@ -11,17 +11,20 @@ if sys.version_info < (2, 6):
 
 import sqlitemodel
 
+with open('README.rst', 'r') as f:
+    longDesc = f.read()
+
 setup(name='sqlitemodel',
       version=sqlitemodel.__version__,
       description='Wrapper for the sqlite3 database that enables you to create models you can easily query, save and update.',
-      long_description='py-sqlite-model is a database wrapper for the sqlite3 database that enables you to create models you can easily query, save and update.',
+      long_description=longDesc,
       author='Rene Tanczos',
       author_email='gravmatt@gmail.com',
       url='https://github.com/gravmatt/sqlitemodel',
       py_modules=['sqlitemodel'],
       scripts=['sqlitemodel.py'],
       license='MIT',
-      platforms='any',
+      platforms=['MacOSX', 'UNIX/Linux'],
       classifiers=['Intended Audience :: Developers',
                    'License :: OSI Approved :: MIT License',
                    'Programming Language :: Python :: 2.5',
@@ -29,6 +32,6 @@ setup(name='sqlitemodel',
                    'Programming Language :: Python :: 2.7',
                    'Programming Language :: Python :: 3',
                    'Programming Language :: Python :: 3.2',
-                   'Programming Language :: Python :: 3.3',
+                   'Programming Language :: Python :: 3.3'
                    ],
       )

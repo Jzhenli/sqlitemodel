@@ -2,7 +2,7 @@
 
 **AT THE MOMENT IT'S IN ALPHA VERSION!**
 
-**I'S POSSIBLE THAT I REBUILD A METHOD FROM SCRATCH.**
+**IT'S POSSIBLE THAT I REBUILD A METHOD FROM SCRATCH.**
 
 **SO BE  CAREFUL WITH UPDATES.**
 
@@ -11,6 +11,22 @@ create models you can easily save, query and retrieve from the database.
 
 This is build with three classes who abstract the database communication
 and the object management.
+
+## Installation
+
+Install through **pip**.
+
+```
+$ pip install sqlitemodel
+```
+
+or get from source
+
+```
+$ git clone https://github.com/gravmatt/sqlitemodel.git
+$ cd sqlitemodel
+$ python setup.py install
+```
 
 ## Classes
 
@@ -252,8 +268,8 @@ getRaw(SQL() | sql query, values=(), max=-1)
 # index 0 is the header of the table
 
 getDict(SQL() | sql query, values=(), max=-1)
-# return a *list* array with a *Dict* object.
-# the key of the *Dict* object is the column name
+# return a list array with a Dict object.
+# the key of the Dict object is the column name
 ```
 
 Copyright (c) 2016, René Tanczos <gravmatt@gmail.com> (Twitter [@gravmatt](https://twitter.com/gravmatt))

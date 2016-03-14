@@ -11,7 +11,7 @@ Project on github https://github.com/gravmatt/sqlitemodel
 """
 
 __author__ = 'Rene Tanczos'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __license__ = 'MIT'
 
 import sqlite3, copy
@@ -156,8 +156,9 @@ class SQL:
 class Model:
     '''Abstracts the communication with the database and makes it easy to store objects'''
 
-    def __init__(self, id=None):
+    def __init__(self, id=None, dbfile=None):
         self.id = id
+        self._dbfile = dbfile
 
 
     def columns(self):
@@ -169,23 +170,23 @@ class Model:
 
 
     def createTable(self):
-        with Database() as db:
+        with Database(self._dbfile) as db:
             db.createTable(self)
 
 
     def save(self):
-        with Database() as db:
+        with Database(self._dbfile) as db:
             db.save(self)
 
 
     def delete(self):
-        with Database() as db:
+        with Database(self._dbfile) as db:
             return db.delete(self)
 
 
     def getModel(self):
         if(self.id):
-            with Database() as m:
+            with Database(self._dbfile) as m:
                 try:
                     m.getById(self, self.id)
                 except:
@@ -193,7 +194,7 @@ class Model:
 
 
     def select(self, sql):
-        with Database() as m:
+        with Database(self._dbfile) as m:
             return m.select(self, sql)
 
 

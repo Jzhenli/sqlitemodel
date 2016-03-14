@@ -4,3 +4,4 @@ sqlitemodel.egg-info
 *.pyc
 test.py
 test/
+markdown_to_rst.sh

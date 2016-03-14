@@ -95,7 +95,9 @@ class User(Model):
 
 The two methods *tablename()* and *columns()* are required so that the Database class knows how the table and its columns are called.
 
-The *id* argument and the *getModel()* method in the constructor are optional.
+*id* argument and the *getModel()* method in the constructor are optional.
+
+The *Model* class constructor has an optional *dbfile* argument. If it is set, the static variable *Database.DB_FILE* is ignored.
 
 #### Working with the User class
 

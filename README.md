@@ -30,11 +30,11 @@ $ python setup.py install
 
 ## Classes
 
-* **Model** - Abstraction class to build database models
+* [**Model** - Abstraction class to build database models](#model)
 
-* **SQL** - SQL query builder
+* [**SQL** - SQL query builder](#sql)
 
-* **Database** - sqlite database interface
+* [**Database** - sqlite database interface](#database)
 
 ## Model
 
@@ -62,9 +62,9 @@ class User(Model):
     def __init__(self, id=None):
         Model.__init__(self, id)
 
-        firstname = ''
-        lastname = ''
-        age = ''
+        self.firstname = ''
+        self.lastname = ''
+        self.age = ''
 
         # Tries to fetch the object by its rowid from the database
         self.getModel()
@@ -93,11 +93,11 @@ class User(Model):
         ]
 ```
 
-The two methods *tablename()* and *columns()* are required so that the Database class knows how the table and its columns are called.
+The two methods `tablename()` and `columns()` are required so that the Database class knows how the table and its columns are called.
 
-*id* argument and the *getModel()* method in the constructor are optional.
+`id` argument and the `getModel()` method in the constructor are optional.
 
-The *Model* class constructor has an optional *dbfile* argument. If it is set, the static variable *Database.DB_FILE* is ignored.
+**The `Model` class constructor has an optional `dbfile` argument. If it is set, the static variable Database.DB_FILE` is ignored.**
 
 #### Working with the User class
 
@@ -274,5 +274,26 @@ getDict(SQL() | sql query, values=(), max=-1)
 # the key of the Dict object is the column name
 ```
 
-Copyright (c) 2016, René Tanczos <gravmatt@gmail.com> (Twitter [@gravmatt](https://twitter.com/gravmatt))
+## Licence
+
 The MIT License (MIT)
+
+Copyright (c) 2016 René Tanczos
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

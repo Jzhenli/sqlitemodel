@@ -97,7 +97,7 @@ The two methods `tablename()` and `columns()` are required so that the Database 
 
 `id` argument and the `getModel()` method in the constructor are optional.
 
-**The `Model` class constructor has an optional `dbfile` argument. If it is set, the static variable Database.DB_FILE` is ignored.**
+**The `Model` class constructor has an optional `dbfile` argument. If it is set, the static variable `Database.DB_FILE` is ignored.**
 
 #### Working with the User class
 

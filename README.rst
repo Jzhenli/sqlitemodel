@@ -108,7 +108,7 @@ the Database class knows how the table and its columns are called.
 optional.
 
 **The ``Model`` class constructor has an optional ``dbfile`` argument.
-If it is set, the static variable Database.DB\_FILE\` is ignored.**
+If it is set, the static variable ``Database.DB_FILE`` is ignored.**
 
 Working with the User class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^

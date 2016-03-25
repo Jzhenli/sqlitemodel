@@ -79,11 +79,11 @@ class User(Model):
     def columns(self):
         return [
             {
-              'firstname': 'name',
+              'name': 'firstname',
               'type': 'TEXT'
             },
             {
-              'lastname': 'name',
+              'name': 'lastname',
               'type': 'TEXT'
             },
             {

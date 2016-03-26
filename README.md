@@ -1,11 +1,5 @@
 # sqlitemodel
 
-**AT THE MOMENT IT'S IN ALPHA VERSION!**
-
-**IT'S POSSIBLE THAT I REBUILD A METHOD FROM SCRATCH.**
-
-**SO BE  CAREFUL WITH UPDATES.**
-
 sqlitemodel is a wrapper for the sqlite3 database that enables you to
 create models you can easily save, query and retrieve from the database.
 

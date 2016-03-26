@@ -11,13 +11,13 @@ Project on github https://github.com/gravmatt/sqlitemodel
 """
 
 __author__ = 'Rene Tanczos'
-__version__ = '0.0.2'
+__version__ = '0.1.0'
 __license__ = 'MIT'
 
 import sqlite3, copy
 
 
-class SQL:
+class SQL(object):
     '''SQL builder to generate SQL statements'''
 
     def __init__(self):
@@ -153,7 +153,7 @@ class SQL:
         return sql
 
 
-class Model:
+class Model(object):
     '''Abstracts the communication with the database and makes it easy to store objects'''
 
     def __init__(self, id=None, dbfile=None):
@@ -188,9 +188,13 @@ class Model:
         if(self.id):
             with Database(self._dbfile) as m:
                 try:
-                    m.getById(self, self.id)
-                except:
+                    model = m.selectById(self, self.id)
+                    self.id = model.id
+                    for name in m._get_model_column_names(model):
+                        self.__dict__[name] = model.__dict__[name]
+                except Exception as e:
                     self.id = None
+                    print e
 
 
     def select(self, sql):
@@ -199,13 +203,14 @@ class Model:
 
 
     def selectOne(self, sql):
-        users = self.select(sql)
-        return users[0] if users else None
+        with Database(self._dbfile) as m:
+            return m.selectOne(self, sql)
 
 
-class Database:
+class Database(object):
     '''Represents an easy to use interface to the database'''
 
+    DatabaseError = sqlite3.DatabaseError
     DB_FILE = None
 
 

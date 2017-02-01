@@ -63,7 +63,7 @@ works.
 
     class User(Model):
         def __init__(self, id=None):
-            Model.__init__(self, id)
+            Model.__init__(self, id, dbfile=None, foreign_keys=False, parse_decltypes=False)
 
             self.firstname = ''
             self.lastname = ''

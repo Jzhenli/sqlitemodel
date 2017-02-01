@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Copyright (c) 2016, René Tanczos <gravmatt@gmail.com> (Twitter @gravmatt)
+Copyright (c) 2016-2017, René Tanczos <gravmatt@gmail.com> (Twitter @gravmatt)
 The MIT License (MIT)
 
 sqlitemodel is a wrapper for the sqlite3 database that enables you to
@@ -11,7 +11,7 @@ Project on github https://github.com/gravmatt/sqlitemodel
 """
 
 __author__ = 'Rene Tanczos'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __license__ = 'MIT'
 
 import sqlite3, copy
@@ -156,9 +156,11 @@ class SQL(object):
 class Model(object):
     '''Abstracts the communication with the database and makes it easy to store objects'''
 
-    def __init__(self, id=None, dbfile=None):
+    def __init__(self, id=None, dbfile=None, foreign_keys=False, parse_decltypes=False):
         self.id = id
         self._dbfile = dbfile
+        self.foreign_keys = foreign_keys
+        self.parse_decltypes = parse_decltypes
 
 
     def columns(self):
@@ -169,24 +171,28 @@ class Model(object):
         pass
 
 
+    def __create_db(self):
+        return Database(self._dbfile, foreign_keys=self.foreign_keys, parse_decltypes=self.parse_decltypes)
+
+
     def createTable(self):
-        with Database(self._dbfile) as db:
+        with self.__create_db() as db:
             db.createTable(self)
 
 
     def save(self):
-        with Database(self._dbfile) as db:
+        with self.__create_db() as db:
             db.save(self)
 
 
     def delete(self):
-        with Database(self._dbfile) as db:
+        with self.__create_db() as db:
             return db.delete(self)
 
 
     def getModel(self):
         if(self.id):
-            with Database(self._dbfile) as m:
+            with self.__create_db() as m:
                 try:
                     model = m.selectById(self, self.id)
                     self.id = model.id
@@ -198,13 +204,23 @@ class Model(object):
 
 
     def select(self, sql):
-        with Database(self._dbfile) as m:
+        with self.__create_db() as m:
             return m.select(self, sql)
 
 
     def selectOne(self, sql):
-        with Database(self._dbfile) as m:
+        with self.__create_db() as m:
             return m.selectOne(self, sql)
+
+
+    def selectCopy(self, sql):
+        '''Run the SQL statement, select the first entry and copy
+        the properties of the result object into the calling object.'''
+        m = self.selectOne(sql)
+        if(m):
+            self.id = m.id
+            for name in [n['name'] for n in m.columns()]:
+                self.__dict__[name] = m.__dict__[name]
 
 
 class Database(object):
@@ -214,9 +230,9 @@ class Database(object):
     DB_FILE = None
 
 
-    def __init__(self, dbfile=None, foreign_keys=False):
+    def __init__(self, dbfile=None, foreign_keys=False, parse_decltypes=False):
         self.dbfile = dbfile if dbfile else Database.DB_FILE
-        self.conn = sqlite3.connect(self.dbfile)
+        self.conn = sqlite3.connect(self.dbfile, detect_types=(sqlite3.PARSE_DECLTYPES if parse_decltypes else 0))
         self.db = self.conn.cursor()
         if(foreign_keys):
             self.db.execute('PRAGMA foreign_keys = ON;')

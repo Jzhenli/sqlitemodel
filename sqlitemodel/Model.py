@@ -1,3 +1,6 @@
+from Database import Database
+
+
 class Model(object):
     '''Abstracts the communication with the database and makes it easy to store objects'''
 

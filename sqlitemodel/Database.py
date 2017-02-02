@@ -1,3 +1,4 @@
+from SQL import SQL
 import sqlite3, copy
 
 
@@ -120,3 +121,10 @@ class Database(object):
                 headIdx += 1
             table.append(obj)
         return table
+
+
+    def zeroZero(self, sql, values=()):
+        query = sql.toStr() if sql.__class__ == SQL else sql
+        self.db.execute(query, sql.values if sql.__class__ == SQL else values)
+        row = self.db.fetchone()
+        return row[0] if row else -1

@@ -2,9 +2,9 @@
 
 import sys
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
 except ImportError:
-    from distutils.core import setup
+    from distutils.core import setup, find_packages
 
 if sys.version_info < (2, 6):
     raise NotImplementedError("Sorry, you need at least Python 2.6 or Python 3.2+ to use sqlitemodel.")
@@ -21,7 +21,8 @@ setup(name='sqlitemodel',
       author='Rene Tanczos',
       author_email='gravmatt@gmail.com',
       url='https://github.com/gravmatt/sqlitemodel',
-      py_modules=['sqlitemodel'],
+    #   py_modules=['sqlitemodel'],
+      packages = find_packages(),
       license='MIT',
       platforms=['MacOSX', 'UNIX/Linux'],
       classifiers=['Intended Audience :: Developers',

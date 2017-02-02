@@ -87,9 +87,25 @@ class User(Model):
         ]
 ```
 
-The two methods `tablename()` and `columns()` are required so that the Database class knows how the table and its columns are called.
+The two methods `tablename()` and `columns()` are required, to map the table columns with the `Model` objects.
 
 `id` argument and the `getModel()` method in the constructor are optional.
+
+It also possible to use the `selectCopy()` method to query for any data in the database table and fill the model object with the result.
+
+```
+selectCopy(SQL() | raw_sql_query_string)
+```
+
+Ex:
+
+```
+class User(Model):
+    def __init__(self, id=None, email=None):
+        Model.__init__(self, id)
+        if(email):
+            self.selectCopy(SQL().WHERE('email', '=', email))
+```
 
 **The `Model` class constructor has an optional `dbfile` argument. If it is set, the static variable `Database.DB_FILE` is ignored.**
 
@@ -176,6 +192,16 @@ print sql.getValues()
 # (27, 190)
 ```
 
+`WHERE`
+
+The WHERE method has a optional `isRaw` parameter.
+
+If set to `True`, the SQL class paste the value directly into the sql query and does not use the `?` symbol.
+
+```
+WHERE('size', '<', 190, isRaw=True)
+```
+
 **DELETE**
 
 ```
@@ -256,7 +282,7 @@ selectById(model, id)
 # return the a model object by his id
 ```
 
-But if there is some data without a *Model*, it can be retrieved as *list* or *list* of *Dict* objects.
+If there is some data without a *Model*, it can be retrieved as raw data of a *list* or *list* of *Dict* objects.
 
 ```
 getRaw(SQL() | sql query, values=(), max=-1)
@@ -268,11 +294,19 @@ getDict(SQL() | sql query, values=(), max=-1)
 # the key of the Dict object is the column name
 ```
 
+To count the results of a query, the method *zeroZero()* can be used.
+
+```
+zeroZero(SQL() | sql query)
+# It return the the first column of the first line ( result[0][0] )
+# That why the method is called zeroZero()
+```
+
 ## Licence
 
 The MIT License (MIT)
 
-Copyright (c) 2016 René Tanczos
+Copyright (c) 2016-2017 René Tanczos
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

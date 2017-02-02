@@ -72,18 +72,18 @@ class SQL(object):
         return self
 
 
-    def WHERE(self, field, operator, value):
-        self.__where.append((field, operator, value))
+    def WHERE(self, field, operator, value, isRaw=False):
+        self.__where.append((field, operator, value, isRaw))
         return self
 
 
     def AND(self):
-        self.__where.append((None, 'AND', None))
+        self.__where.append((None, 'AND', None, False))
         return self
 
 
     def OR(self):
-        self.__where.append((None, 'OR', None))
+        self.__where.append((None, 'OR', None, False))
         return self
 
 
@@ -98,6 +98,7 @@ class SQL(object):
 
 
     def getValues(self):
+        self.toStr()
         return tuple(self.values) if self.values else ();
 
 
@@ -111,7 +112,7 @@ class SQL(object):
                 if(not t[0] and not t[2]):
                     wherebuild.append(t[1])
                 else:
-                    wherebuild.append('%s%s?' % (t[0], t[1]))
+                    wherebuild.append(('%s%s%s' % (t[0], t[1], t[2])) if t[3] else ('%s%s?' % (t[0], t[1])))
             where += ' '.join(wherebuild)
 
         if(self.__command == 'select'):
@@ -129,6 +130,6 @@ class SQL(object):
             sql = self.__create % ', '.join(self.__columns)
 
         if(self.__where):
-            self.values = [t[2] for t in self.__where if t[0] or t[2]]
+            self.values = [t[2] for t in self.__where if (t[0] or t[2]) and not t[3]]
 
         return sql

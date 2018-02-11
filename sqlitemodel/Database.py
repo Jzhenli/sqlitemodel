@@ -1,4 +1,4 @@
-from SQL import SQL
+from sqlitemodel.SQL import SQL
 import sqlite3, copy
 
 

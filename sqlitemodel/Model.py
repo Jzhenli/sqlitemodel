@@ -1,4 +1,4 @@
-from Database import Database
+from sqlitemodel.Database import Database
 
 
 class Model(object):
@@ -9,6 +9,7 @@ class Model(object):
         self._dbfile = dbfile
         self.foreign_keys = foreign_keys
         self.parse_decltypes = parse_decltypes
+        self.last_error = None
 
 
     def columns(self):
@@ -47,8 +48,8 @@ class Model(object):
                     for name in m._get_model_column_names(model):
                         self.__dict__[name] = model.__dict__[name]
                 except Exception as e:
+                    self.last_error = e
                     self.id = None
-                    print e
 
 
     def select(self, sql):

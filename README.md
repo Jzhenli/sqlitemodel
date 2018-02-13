@@ -302,6 +302,17 @@ zeroZero(SQL() | sql query)
 # That why the method is called zeroZero()
 ```
 
+To check if a table or column exists, the functions *table_exists()* and *column_exists()* can be used.
+Both will return a boolean value if the table/column was found or not.
+
+```
+table_exists('tablename')
+# True or False
+
+column_exists('tablename', 'column_name')
+# True or False
+```
+
 ## Licence
 
 The MIT License (MIT)

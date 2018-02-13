@@ -128,3 +128,13 @@ class Database(object):
         self.db.execute(query, sql.values if sql.__class__ == SQL else values)
         row = self.db.fetchone()
         return row[0] if row else -1
+
+
+    def table_exists(self, tablename):
+        sql = "select * from sqlite_master where type='table' and name='%s';" % tablename
+        return len(self.getDict(sql)) > 0
+
+
+    def column_exists(self, tablename, columnname):
+        sql = "pragma table_info('%s');" % tablename
+        return len([r for r in self.getDict(sql) if r['name'] == columnname]) > 0

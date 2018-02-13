@@ -11,7 +11,7 @@ Project on github https://github.com/gravmatt/sqlitemodel
 """
 
 __author__ = 'Rene Tanczos'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 __license__ = 'MIT'
 
 from sqlitemodel.SQL import SQL
